@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Category Atlas — Grouping Products Based on Categories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,720&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Mini project · Data exploration</p>
+          <h1>Grouping products based on categories</h1>
+          <p class="lede">
+            Upload a catalog or explore the sample set. Products are grouped by category, then filtered and charted so
+            you can see how the assortment is distributed.
+          </p>
+        </div>
+        <div class="top-actions">
+          <button class="btn ghost" id="load-sample" type="button">Load sample</button>
+          <label class="btn file-btn">
+            Upload CSV / JSON
+            <input id="file-input" type="file" accept=".csv,.json,text/csv,application/json" />
+          </label>
+          <button class="btn olive" id="download-template" type="button">Template CSV</button>
+          <button class="btn" id="export-view" type="button">Export view</button>
+        </div>
+      </header>
+
+      <p class="notice hidden" id="notice"></p>
+
+      <section class="kpi-grid">
+        <article class="kpi">
+          <span>Total products</span>
+          <strong id="kpi-total">0</strong>
+          <em id="source-label">Built-in sample catalog</em>
+        </article>
+        <article class="kpi">
+          <span>Categories</span>
+          <strong id="kpi-categories">0</strong>
+          <em id="kpi-categories-sub"></em>
+        </article>
+        <article class="kpi">
+          <span>Average price</span>
+          <strong id="kpi-avg">$0</strong>
+          <em id="kpi-range"></em>
+        </article>
+        <article class="kpi">
+          <span>Largest group</span>
+          <strong id="kpi-top-count">0</strong>
+          <em id="kpi-top-name">—</em>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>Filters</h2>
+        <p class="hint">Narrow by name, category, or price. Click a chart slice to isolate one category.</p>
+        <div class="filters">
+          <label>
+            Product name
+            <input id="query" type="text" placeholder="Search name, brand, or SKU" />
+          </label>
+          <label>
+            Min / max price
+            <div class="price-row">
+              <input id="min-price" type="number" min="0" />
+              <input id="max-price" type="number" min="0" />
+            </div>
+          </label>
+          <label>
+            Price ceiling slider
+            <input id="price-slider" type="range" />
+          </label>
+          <button class="btn ghost" id="reset-filters" type="button">Reset</button>
+        </div>
+        <div class="chips" id="category-chips"></div>
+      </section>
+
+      <section class="charts">
+        <article class="panel">
+          <h2>Products per category</h2>
+          <p class="hint">Bar height is the count of products in each group.</p>
+          <div class="chart-box"><canvas id="bar-chart"></canvas></div>
+        </article>
+        <article class="panel">
+          <h2>Category share</h2>
+          <p class="hint">Pie slices show how the current view is split across categories.</p>
+          <div class="chart-box"><canvas id="pie-chart"></canvas></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>Grouped catalog</h2>
+        <p class="hint">Each category is a group with count, average price, and inventory value. Click a header to collapse it.</p>
+        <div class="groups" id="groups"></div>
+      </section>
+
+      <section class="panel">
+        <h2>All products in view</h2>
+        <p class="hint">Click a column header to sort. This table reflects the same filters as the charts.</p>
+        <div class="table-wrap" id="product-table"></div>
+      </section>
+
+      <footer class="note">
+        Expected columns: <b>name</b>, <b>category</b>, <b>price</b>. Optional: id, brand, stock. JSON should be an array
+        of objects with the same fields.
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
